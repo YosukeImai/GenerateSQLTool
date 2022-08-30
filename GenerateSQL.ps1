@@ -29,9 +29,9 @@ function GenerateSQLFile {
     $line_count = 0
     Get-Content $input_file -Encoding UTF8 | ForEach-Object{
         $data = $_
-        $joined_value = $data -replace ",","\," -replace "'","\'" -replace $delimiter,"','"
+        $joined_value = $data -replace ",","\," -replace "'","{@tab}" -replace $delimiter,"','"
         $sql_value = "('" + $joined_value + "')" 
-        $sql_value = $sql_value -replace "''","null"
+        $sql_value = $sql_value -replace "''","null" -replace "{@tab}","\'"
 
         if($line_count -eq 0){
             $joined_header = $data -replace $delimiter,","
